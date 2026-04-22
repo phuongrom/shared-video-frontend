@@ -1,0 +1,11 @@
+services:
+  frontend:
+    build:
+      context: .
+    ports:
+      - "80:80"
+    # extra_hosts maps the 'backend' hostname to the host machine so nginx
+    # can proxy /api/ and /cable to a backend running outside this compose project.
+    # Requires backend to be running on host port 3000 (e.g. via its own docker-compose).
+    extra_hosts:
+      - "backend:host-gateway"

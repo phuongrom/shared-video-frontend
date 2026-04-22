@@ -1,0 +1,148 @@
+*, *::before, *::after { box-sizing: border-box; }
+
+:root {
+  --red: #e00;
+  --primary: #d9534f;
+  --primary-dark: #b52b27;
+  --border: #ddd;
+  --bg: #f5f5f5;
+  --card-bg: #fff;
+  --text: #333;
+  --text-light: #666;
+  --radius: 6px;
+  --shadow: 0 2px 8px rgba(0,0,0,0.08);
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 15px;
+  color: var(--text);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+body { margin: 0; }
+
+#root { min-height: 100vh; }
+
+/* ─── App layout ─────────────────────────────────────────── */
+.app { min-height: 100vh; display: flex; flex-direction: column; }
+.main { max-width: 900px; margin: 0 auto; padding: 24px 16px; width: 100%; }
+
+/* ─── Header ─────────────────────────────────────────────── */
+.header { background: #fff; border-bottom: 1px solid var(--border); }
+.header-inner {
+  max-width: 900px; margin: 0 auto; padding: 0 16px;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 60px;
+}
+.logo { font-size: 20px; font-weight: 700; color: var(--primary); margin: 0; }
+.logo-icon { margin-right: 6px; }
+.nav { display: flex; align-items: center; gap: 12px; }
+.nav-user { font-size: 13px; color: var(--text-light); }
+
+/* ─── Buttons ─────────────────────────────────────────────── */
+.btn {
+  padding: 7px 16px; border-radius: var(--radius);
+  font-size: 13px; font-weight: 500; cursor: pointer;
+  border: 1px solid transparent; transition: all .15s;
+}
+.btn-primary { background: var(--primary); color: #fff; border-color: var(--primary); }
+.btn-primary:hover { background: var(--primary-dark); }
+.btn-primary:disabled { opacity: .6; cursor: default; }
+.btn-outline { background: #fff; color: var(--text); border-color: var(--border); }
+.btn-outline:hover { border-color: #bbb; background: #f9f9f9; }
+.btn-outline:disabled { opacity: .5; cursor: default; }
+.btn-full { width: 100%; }
+
+/* ─── Auth hint ───────────────────────────────────────────── */
+.auth-hint {
+  text-align: center; padding: 12px;
+  background: #fff3cd; border: 1px solid #ffc107;
+  border-radius: var(--radius); margin-bottom: 20px;
+  font-size: 14px; color: #856404;
+}
+
+/* ─── Video list ──────────────────────────────────────────── */
+.video-list { display: flex; flex-direction: column; gap: 20px; }
+.loading, .error, .empty {
+  text-align: center; padding: 40px; color: var(--text-light);
+}
+.error { color: var(--red); }
+
+/* ─── Video card ──────────────────────────────────────────── */
+.video-card {
+  background: var(--card-bg); border: 1px solid var(--border);
+  border-radius: var(--radius); overflow: hidden;
+  display: grid; grid-template-columns: 400px 1fr;
+  box-shadow: var(--shadow);
+}
+@media (max-width: 700px) {
+  .video-card { grid-template-columns: 1fr; }
+}
+.video-embed { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: #000; }
+.video-embed iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+.video-thumbnail-btn {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  border: 0; padding: 0; cursor: pointer; background: #000; overflow: hidden;
+}
+.video-thumbnail-btn img { width: 100%; height: 100%; object-fit: cover; opacity: .85; transition: opacity .2s; }
+.video-thumbnail-btn:hover img { opacity: .65; }
+.play-icon {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  font-size: 48px; color: #fff; text-shadow: 0 2px 8px rgba(0,0,0,.6);
+  pointer-events: none;
+}
+.video-info { padding: 20px; display: flex; flex-direction: column; gap: 8px; }
+.video-title { margin: 0; font-size: 16px; font-weight: 600; line-height: 1.4; }
+.video-title a { color: var(--text); text-decoration: none; }
+.video-title a:hover { color: var(--primary); }
+.video-meta { font-size: 13px; color: var(--text-light); margin: 0; }
+.video-meta-email { color: #999; }
+.video-description { font-size: 13px; color: var(--text-light); margin: 0; line-height: 1.5; }
+
+/* ─── Pagination ──────────────────────────────────────────── */
+.pagination {
+  display: flex; align-items: center; justify-content: center;
+  gap: 16px; padding: 20px 0;
+}
+.pagination-info { font-size: 13px; color: var(--text-light); }
+
+/* ─── Modals ──────────────────────────────────────────────── */
+.modal-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,.5);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 1000; padding: 16px;
+}
+.modal {
+  background: #fff; border-radius: 8px;
+  padding: 28px; width: 100%; max-width: 420px;
+  position: relative; box-shadow: 0 8px 32px rgba(0,0,0,.2);
+}
+.modal h2 { margin: 0 0 20px; font-size: 20px; }
+.modal-close {
+  position: absolute; top: 12px; right: 16px;
+  background: none; border: none; font-size: 22px;
+  cursor: pointer; color: var(--text-light); line-height: 1;
+}
+
+/* ─── Form ────────────────────────────────────────────────── */
+.form { display: flex; flex-direction: column; gap: 14px; }
+.form-group { display: flex; flex-direction: column; gap: 5px; }
+.form-group label { font-size: 13px; font-weight: 500; color: var(--text); }
+.form-group input {
+  padding: 9px 12px; border: 1px solid var(--border);
+  border-radius: var(--radius); font-size: 14px;
+  transition: border-color .15s;
+}
+.form-group input:focus { outline: none; border-color: var(--primary); }
+.form-actions { display: flex; gap: 10px; justify-content: flex-end; }
+.error-message { color: var(--red); font-size: 13px; margin: 0; }
+.preview-loading { font-size: 13px; color: var(--text-light); margin: 0; }
+.video-preview {
+  display: flex; gap: 10px; align-items: flex-start;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 10px;
+}
+.video-preview img { width: 100px; height: 56px; object-fit: cover; border-radius: 4px; flex-shrink: 0; }
+.preview-title { font-size: 13px; font-weight: 500; color: var(--text); margin: 0; line-height: 1.4; }
+
+/* ─── Toast content ───────────────────────────────────────── */
+.toast-content { font-size: 14px; line-height: 1.5; }
