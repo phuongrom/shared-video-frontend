@@ -20,7 +20,7 @@ function AppInner() {
   const handleNotification = useCallback(
     (notification: Notification) => {
       // Don't notify the user who just shared the video
-      if (user?.name === notification.shared_by) return;
+      if (user?.id === notification.shared_by_id) return;
 
       toast(
         <div className="toast-content">

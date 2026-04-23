@@ -42,6 +42,7 @@ export interface Notification {
   video_title: string;
   thumbnail_url: string;
   shared_by: string;
+  shared_by_id: number;
   shared_by_email: string;
   created_at: string;
 }

@@ -93,7 +93,7 @@ export function ShareVideoModal({ onClose, onSuccess }: ShareVideoModalProps) {
 
           {/* Live preview */}
           {previewLoading && (
-            <p className="preview-loading">Đang tải thông tin video...</p>
+            <p className="preview-loading">Loading video info...</p>
           )}
           {preview && !previewLoading && (
             <div className="video-preview">
