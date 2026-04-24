@@ -1,73 +1,100 @@
-# React + TypeScript + Vite
+# YouTube Sharing App — Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React 19 · TypeScript · Vite · Zustand · TanStack Query · ActionCable
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Prerequisites
 
-## React Compiler
+| Tool | Version |
+|------|---------|
+| Node.js | >= 20 |
+| npm | >= 10 |
+| Docker & Docker Compose | latest (optional) |
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## Environment Variables
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+The API base URL is configured via Vite env variables.  
+Create a `.env.local` file in the `frontend/` directory:
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+VITE_API_URL=http://localhost:3000
+VITE_WS_URL=ws://localhost:3000/cable
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+> In Docker mode these are handled by nginx proxy — no `.env.local` needed.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+---
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Run with Docker (recommended)
+
+> Backend phải đang chạy trên port 3000 trước.
+
+```bash
+docker compose up --build
+# App available at http://localhost:80
 ```
+
+> nginx tự proxy `/api/` và `/cable` sang backend port 3000.
+
+---
+
+### Các lệnh Docker hay dùng
+
+```bash
+# Xem logs
+docker compose logs -f frontend
+
+# Rebuild khi thay đổi code
+docker compose up --build
+
+# Dừng
+docker compose down
+```
+
+---
+
+## Run Locally (without Docker)
+
+### 1. Install dependencies
+
+```bash
+npm install
+```
+
+### 2. Start dev server
+
+```bash
+npm run dev
+# App available at http://localhost:5173
+```
+
+---
+
+## Available Scripts
+
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Start Vite dev server with HMR |
+| `npm run build` | Type-check + production build → `dist/` |
+| `npm run preview` | Preview production build locally |
+| `npm run lint` | Run ESLint |
+| `npm test` | Run tests (Vitest) |
+| `npm run test:watch` | Run tests in watch mode |
+| `npm run test:ui` | Run tests with Vitest UI |
+
+---
+
+## Tech Stack
+
+| Library | Purpose |
+|---------|---------|
+| React 19 | UI framework |
+| TypeScript | Type safety |
+| Vite | Build tool & dev server |
+| Zustand | Global auth state |
+| TanStack Query | Server state / data fetching |
+| ActionCable (`@rails/actioncable`) | Real-time WebSocket notifications |
+| Sonner | Toast notifications |
