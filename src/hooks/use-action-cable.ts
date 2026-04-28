@@ -15,7 +15,10 @@ export function useNotificationsChannel(
   useEffect(() => {
     if (!token) return;
 
-    const wsUrl = `/cable?token=${encodeURIComponent(token)}`;
+    // VITE_API_URL is empty for local (nginx proxy), set to backend URL on Vercel
+    const apiUrl = import.meta.env.VITE_API_URL ?? "";
+    const wsBase = apiUrl.replace(/^https/, "wss").replace(/^http/, "ws");
+    const wsUrl = `${wsBase}/cable?token=${encodeURIComponent(token)}`;
     consumerRef.current = createConsumer(wsUrl);
 
     subscriptionRef.current = consumerRef.current.subscriptions.create(

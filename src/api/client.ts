@@ -1,5 +1,6 @@
 // Lightweight fetch wrapper with JWT auth header injection
-const BASE_URL = "/api/v1";
+// VITE_API_URL is empty for local (nginx proxy), set to backend URL on Vercel
+const BASE_URL = `${import.meta.env.VITE_API_URL ?? ""}/api/v1`;
 
 function getToken(): string | null {
   return localStorage.getItem("token");
